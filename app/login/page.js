@@ -11,7 +11,7 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const res = await apiFetch("/users/login", {
+    const res = await fetch("/api/v1/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include", 

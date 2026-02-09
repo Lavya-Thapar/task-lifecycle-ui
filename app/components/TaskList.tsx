@@ -50,7 +50,7 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
     if (status) payload.status = status;
     if (priority) payload.priority = priority;
 
-    await apiFetch("/tasks/create-task", {
+    await fetch("/api/v1/tasks/create-task", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -83,8 +83,8 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
       payload.dueDate = new Date(editDueDate).toISOString();
     }
 
-    const res = await apiFetch(
-      `/tasks/update-task/${editingTaskId}`,
+    const res = await fetch(
+      `/api/v1/tasks/update-task/${editingTaskId}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -107,7 +107,7 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
 
 
   const handleDelete = async (taskId: string) => {
-    await apiFetch(`/tasks/delete-task/${taskId}`, {
+    await apiFetch(`/api/v1/tasks/delete-task/${taskId}`, {
       method: "DELETE",
       credentials: "include"
     });
