@@ -1,11 +1,12 @@
 import type { NextConfig } from "next";
 
+
 const nextConfig = {
   async rewrites() {
     return [
       {
         source: "/api/:path*", 
-        destination: "https://task-lifecycle.onrender.com/api/:path*", // The actual backend
+        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/:path*`, // The actual backend
       },
     ];
   },
