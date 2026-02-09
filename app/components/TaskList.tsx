@@ -107,7 +107,7 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
 
 
   const handleDelete = async (taskId: string) => {
-    await apiFetch(`/api/v1/tasks/delete-task/${taskId}`, {
+    await fetch(`/api/v1/tasks/delete-task/${taskId}`, {
       method: "DELETE",
       credentials: "include"
     });
