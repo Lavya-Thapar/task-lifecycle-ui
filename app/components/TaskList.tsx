@@ -50,12 +50,20 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
     if (status) payload.status = status;
     if (priority) payload.priority = priority;
 
-    await fetch("/api/v1/tasks/create-task", {
+    const res = await fetch("/api/v1/tasks/create-task", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
       body: JSON.stringify(payload)
     });
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      alert(data.message || "could not create task!")
+      
+      return;
+    }
 
     // reset form
     setTitle("");
@@ -93,10 +101,10 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
       }
     );
 
-    
+    const data = await res.json()
     if (!res.ok) {
       
-      alert("could not update!")
+      alert(data.message || "could not update!")
       
       return;
     }
@@ -107,10 +115,16 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
 
 
   const handleDelete = async (taskId: string) => {
-    await fetch(`/api/v1/tasks/delete-task/${taskId}`, {
+    const res =await fetch(`/api/v1/tasks/delete-task/${taskId}`, {
       method: "DELETE",
       credentials: "include"
     });
+
+    const data = await res.json()
+    if (!res.ok) {
+      alert(data.message || "could not delete!")
+      return;
+    }
 
     refreshTasks();
   };

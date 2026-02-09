@@ -18,10 +18,11 @@ export default function LoginPage() {
       body: JSON.stringify({ identifier, password })
     });
 
-    //const data = await res.json();
+    const data = await res.json();
 
     if (!res.ok) {
-      alert("could not login!")
+      const errorMessage = data.message || "Login failed"; 
+      alert(errorMessage);
       return;
     }
 
