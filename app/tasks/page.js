@@ -10,6 +10,7 @@ export default function TasksPage() {
 
   const fetchTasks = async () => {
     const res = await apiFetch("/users/get-tasks", {
+      method: "GET",
       credentials: "include",
       cache: "no-store",
     });
