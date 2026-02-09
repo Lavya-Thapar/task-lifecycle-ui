@@ -9,7 +9,7 @@ export default function TasksPage() {
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = async () => {
-    const res = await apiFetch("/api/v1/users/get-tasks", {
+    const res = await fetch("/api/v1/users/get-tasks", {
       //method: "GET",
       credentials: "include",
       cache: "no-store",
