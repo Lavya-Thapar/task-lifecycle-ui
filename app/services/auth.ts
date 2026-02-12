@@ -1,4 +1,5 @@
 export const logoutUser = async () => {
+
   const res = await fetch(
     `/api/v1/users/logout`,
     {
@@ -7,9 +8,17 @@ export const logoutUser = async () => {
     }
   );
 
+  const data = await res.json()
   if (!res.ok) {
-    alert("could not logout!");
+    // Show an error toast if the logout failed
+    //alert(data.message || "Logout failed");
+    return false;
+    
   }
+
+  // Show a success toast if the logout was successful
+  //alert(data.message || "logged out successfully!");
 
   return true;
 };
+

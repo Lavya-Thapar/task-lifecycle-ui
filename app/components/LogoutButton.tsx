@@ -2,28 +2,38 @@
 
 import { useRouter } from "next/navigation";
 import { logoutUser } from "../services/auth";
+import { useToast } from "../hooks/toast";
 
 const LogoutButton = () => {
   const router = useRouter();
+  const { toast, showToast } = useToast();
 
   const handleLogout = async () => {
     try {
       await logoutUser();
       localStorage.clear();
       router.replace("/login");
+      showToast("logged out successfully!", "success");
     } catch (error) {
       console.error(error);
-      alert("Logout failed");
+      showToast("Logout failed", "error");
     }
   };
 
   return (
-    <button
-      onClick={handleLogout}
-      className="logout-btn"
-    >
-      Logout
-    </button>
+    <div>
+      {toast.visible && (
+          <div className={`toast-notification toast-${toast.type}`}>
+            <span>{toast.message}</span>
+          </div>
+        )}
+      <button
+        onClick={handleLogout}
+        className="logout-btn"
+      >
+        Logout
+      </button>
+    </div>
   );
 };
 

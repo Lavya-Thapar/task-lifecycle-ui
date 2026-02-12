@@ -4,6 +4,8 @@ import { useState } from "react";
 import "./TaskList.css";
 import { apiFetch } from "../lib/api";
 import LogoutButton from "./LogoutButton";
+import { formatDateForInput } from "./formatDate";
+import {useToast} from "../hooks/toast";
 
 type Task = {
   _id: string;
@@ -37,18 +39,25 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+
+  const { toast, showToast } = useToast();
   // CREATE TASK
   const handleCreate = async () => {
-    if (!title || !description || !dueDate) return;
+    if (!title || !description || !dueDate) {
+      alert("Please fill in all required fields");
+      return;
+    }
 
     const payload: any = {
-      title,
-      description,
-      dueDate: new Date(dueDate).toISOString()
+      title: title.trim(),
+      description: description.trim(),
+      dueDate: new Date(dueDate).toISOString(), 
+      status: status || "Pending",
+      priority: priority || undefined 
     };
 
-    if (status) payload.status = status;
-    if (priority) payload.priority = priority;
+    // if (status) payload.status = status;
+    // if (priority) payload.priority = priority;
 
     const res = await fetch("/api/v1/tasks/create-task", {
       method: "POST",
@@ -60,11 +69,12 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
     const data = await res.json();
 
     if(!res.ok) {
-      alert(data.message || "could not create task!")
+      showToast(data.message || "could not create task!", "error");
       
       return;
     }
 
+    showToast(data.message || "Task created successfully!", "success");
     // reset form
     setTitle("");
     setDescription("");
@@ -104,10 +114,12 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
     const data = await res.json()
     if (!res.ok) {
       
-      alert(data.message || "could not update!")
+      showToast(data.message || "could not update!","error")
       
       return;
     }
+
+    showToast(data.message || "task updated successfully!", "success");
 
     setEditingTaskId(null);
     refreshTasks();
@@ -122,10 +134,11 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
 
     const data = await res.json()
     if (!res.ok) {
-      alert(data.message || "could not delete!")
+      showToast(data.message || "could not delete!","error")
       return;
     }
 
+    showToast(data.message || "task deleted successfully!", "success");
     refreshTasks();
   };
 
@@ -157,6 +170,12 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
       >
         +
       </button>
+
+      {toast.visible && (
+        <div className={`toast-notification toast-${toast.type}`}>
+           <span>{toast.message}</span>
+        </div>
+      )}
 
       {showCreateModal && (
         <div className="modal-overlay">
@@ -328,7 +347,7 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
                     setEditingTaskId(task._id);
                     setEditTitle(task.title);
                     setEditDescription(task.description);
-                    setEditDueDate(task.dueDate.slice(0, 16));
+                    setEditDueDate(formatDateForInput(task.dueDate));
                     setEditStatus(task.status);
                     setEditPriority(task.priority);
                     setShowEditModal(true);

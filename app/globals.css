@@ -30,3 +30,47 @@
 .logout-btn:hover {
   background: #b91c1c;
 }
+
+/* Toast Container */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px; /* Bubble shape */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10000; /* Ensure it is above modals */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  animation: slideDownFade 0.3s forwards;
+}
+
+.toast-error {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+
+.toast-success {
+  background-color: #dcfce7;
+  color: #16a34a;
+  border: 1px solid #86efac;
+}
+
+@keyframes slideDownFade {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 20px;
+    opacity: 1;
+  }
+}

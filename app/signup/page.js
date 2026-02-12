@@ -3,12 +3,15 @@ import { useState } from "react";
 import Link from "next/link";
 import { apiFetch } from "../lib/api";
 import "../styles/auth.css";
+import {useToast} from "../hooks/toast"
 
 export default function SignupPage() {
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { toast, showToast } = useToast();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -19,13 +22,15 @@ export default function SignupPage() {
       body: JSON.stringify({ fullname, username, email, password })
     });
 
-    //const data = await res.json();
+    const data = await res.json();
 
     if (!res.ok) {
-      alert("could not sign up!")
+      showToast(data.message || "Could not sign up ", "error")
       
       return;
     }
+
+    showToast(data.message || "signed up", "success")
 
     window.location.href = "/login";
   };
