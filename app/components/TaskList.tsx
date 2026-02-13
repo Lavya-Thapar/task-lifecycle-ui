@@ -40,11 +40,12 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
+
   const { toast, showToast } = useToast();
   // CREATE TASK
   const handleCreate = async () => {
     if (!title || !description || !dueDate) {
-      alert("Please fill in all required fields");
+      showToast("Please fill in all required fields","error");
       return;
     }
 
@@ -160,6 +161,7 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
     return "status-pending";
   };
 
+ 
   return (
     <div>
       
@@ -188,12 +190,17 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
             />
 
             <input
-              type="datetime-local"
+              type={dueDate ? "datetime-local" : "text"}
+              placeholder="Due Date *"
               value={dueDate}
+              onFocus={(e) => (e.target.type = "datetime-local")}
+              onBlur={(e) => {
+                if (!e.target.value) e.target.type = "text";
+              }}
               onChange={(e) => setDueDate(e.target.value)}
             />
 
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <select value={status} aria-placeholder="Status" onChange={(e) => setStatus(e.target.value)}>
               <option value="">Status (optional)</option>
               <option value="Pending">Pending</option>
               <option value="In progress">In progress</option>

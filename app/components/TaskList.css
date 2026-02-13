@@ -250,7 +250,7 @@
   color: #065f46;
 }
 
-.search-bar-container {
+.search-bar-and-filter-container {
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
@@ -281,4 +281,56 @@
   color: #6b7280;
   margin-top: 40px;
   font-size: 1.1rem;
+}
+
+.filter-btn {
+  padding: 10px 15px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-popup {
+  position: absolute;
+  top: 100%; /* Shows right below the button */
+  right: 0;
+  width: 200px;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 15px;
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+.filter-section h4 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.filter-section label {
+  display: block; /* Makes checks stack vertically */
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.filter-section input {
+  margin-right: 8px;
+}
+
+.clear-filters-btn {
+  width: 100%;
+  margin-top: 10px;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
 }
