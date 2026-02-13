@@ -43,7 +43,7 @@
 
 /* Floating + button */
 .add-task-btn {
-  position: fixed;
+  position: relative;
   top: 20px;
   right: 20px;
   width: 48px;
@@ -248,4 +248,37 @@
 .priority-low {
   background: #d1fae5;
   color: #065f46;
+}
+
+.search-bar-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.search-input {
+  width: 100%;
+  max-width: 500px; 
+  padding: 12px 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 50px; 
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+/* Focus State */
+.search-input:focus {
+  border-color: #3b82f6; 
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); 
+}
+
+/* No Results Text */
+.no-results {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 40px;
+  font-size: 1.1rem;
 }

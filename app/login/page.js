@@ -31,7 +31,7 @@ export default function LoginPage() {
 
     showToast(data.message || "logged In successfully", "success")
     // success, then redirect
-    window.location.href = "/tasks";
+    window.location.href = "/dashboard";
   };
 
   return (

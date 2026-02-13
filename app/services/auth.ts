@@ -10,14 +10,10 @@ export const logoutUser = async () => {
 
   const data = await res.json()
   if (!res.ok) {
-    // Show an error toast if the logout failed
-    //alert(data.message || "Logout failed");
+    
     return false;
     
   }
-
-  // Show a success toast if the logout was successful
-  //alert(data.message || "logged out successfully!");
 
   return true;
 };

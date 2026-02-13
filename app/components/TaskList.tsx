@@ -56,8 +56,6 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
       priority: priority || undefined 
     };
 
-    // if (status) payload.status = status;
-    // if (priority) payload.priority = priority;
 
     const res = await fetch("/api/v1/tasks/create-task", {
       method: "POST",
@@ -90,13 +88,13 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
 
     const payload: any = {};
 
-    // 1. Send fields even if empty (so backend can process them)
+    // Send fields even if empty (so backend can process them)
     payload.title = editTitle.trim();
     payload.description = editDescription.trim();
     payload.status = editStatus;
     payload.priority = editPriority;
 
-    // 2. Only send Date if it is valid
+    // Only send Date if it is valid
     if (editDueDate) {
       payload.dueDate = new Date(editDueDate).toISOString();
     }
@@ -164,12 +162,7 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
 
   return (
     <div>
-      <button
-        className="add-task-btn"
-        onClick={() => setShowCreateModal(true)}
-      >
-        +
-      </button>
+      
 
       {toast.visible && (
         <div className={`toast-notification toast-${toast.type}`}>
@@ -304,9 +297,15 @@ export default function TaskList({ tasks, refreshTasks }: TaskListProps) {
 
 
       <hr />
-      <LogoutButton />
 
       <h2 className="page-title">Your Tasks</h2>
+
+      <button
+        className="add-task-btn"
+        onClick={() => setShowCreateModal(true)}
+      >
+        +
+      </button>
 
       {tasks.length === 0 ? (
         <div className="empty-state">

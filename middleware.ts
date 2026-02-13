@@ -7,8 +7,6 @@ export function middleware(req: NextRequest) {
 
   const isAuthPage =
     pathname === "/login" || pathname === "/signup";
-
-    //console.log("MIDDLEWARE HIT:", req.nextUrl.pathname);
   
   if (!accessToken && !isAuthPage) {
     return NextResponse.redirect(new URL("/login", req.url));
@@ -16,12 +14,12 @@ export function middleware(req: NextRequest) {
 
   
   if (accessToken && isAuthPage) {
-    return NextResponse.redirect(new URL("/tasks", req.url));
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/", "/tasks/:path*", "/login", "/signup"],
+  matcher: ["/", "/dashboard/:path*", "/login", "/signup"],
 };

@@ -10,10 +10,18 @@ const LogoutButton = () => {
 
   const handleLogout = async () => {
     try {
-      await logoutUser();
-      localStorage.clear();
-      router.replace("/login");
-      showToast("logged out successfully!", "success");
+      const success = await logoutUser(); 
+      if (success) {
+         localStorage.clear();
+         showToast("Logged out successfully!", "success");
+         
+         // Wait 1 second before redirecting so user sees the toast
+         setTimeout(() => {
+             router.replace("/login");
+         }, 1000);
+      } else {
+         showToast("Logout failed", "error");
+      }
     } catch (error) {
       console.error(error);
       showToast("Logout failed", "error");
